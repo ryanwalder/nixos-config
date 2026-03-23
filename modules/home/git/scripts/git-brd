@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+branches=$(
+  git branch --merged |
+    grep -Ev '(^\*|main|master|dev|develop|development)' ||
+    true
+)
+
+if [[ -n "$branches" ]]; then
+  echo "$branches" | xargs git branch -d
+fi

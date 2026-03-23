@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+branch=$(
+  git branch -v |
+    cut -d ' ' -f 3 |
+    grep -Eo '(main|master|dev|develop|development)' |
+    head -1 ||
+    true
+)
+
+if [[ -z "$branch" ]]; then
+  echo "Could not determine main branch" >&2
+  exit 1
+fi
+
+if git remote -v | grep -q upstream; then
+  remote=upstream
+else
+  remote=origin
+fi
+
+if [[ "${1-}" == "interactive" ]]; then
+  git rebase --interactive "${remote}/${branch}"
+else
+  git rebase "${remote}/${branch}"
+fi
