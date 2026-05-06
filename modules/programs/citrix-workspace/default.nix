@@ -1,4 +1,10 @@
 {...}: {
+  flake.modules.nixos.program_citrix-workspace = {...}: {
+    nixpkgs.config.permittedInsecurePackages = [
+      "libsoup-2.74.3"
+    ];
+  };
+
   flake.modules.homeManager.program_citrix-workspace = {
     pkgs,
     lib,

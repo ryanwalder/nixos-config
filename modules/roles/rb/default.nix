@@ -1,5 +1,9 @@
 {inputs, ...}: {
   flake.modules.nixos.role_rb = {...}: {
+    imports = with inputs.self.modules.nixos; [
+      program_citrix-workspace
+    ];
+
     home-manager.sharedModules = [
       inputs.self.modules.homeManager.role_rb
     ];
