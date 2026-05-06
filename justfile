@@ -36,3 +36,7 @@ facter host=hostname:
 # Manage sops secrets (add, remove, edit, update)
 sops *args:
     ./scripts/sops.py "{{ justfile_directory() }}" {{ args }}
+
+# Hash a file and add it to the nix store (for requireFile sources)
+add-file file:
+    nix-prefetch-url "file://$(realpath {{ file }})"

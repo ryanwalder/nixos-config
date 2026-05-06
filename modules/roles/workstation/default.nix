@@ -41,6 +41,7 @@
       program_i3
       program_just
       program_konsole
+      program_krita
       program_mpv
       program_nemo
       program_nvim

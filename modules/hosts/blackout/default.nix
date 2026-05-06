@@ -10,6 +10,7 @@
       role_home
       role_workstation
       role_gaming
+      role_rb
 
       hardware_audio
       hardware_boot
