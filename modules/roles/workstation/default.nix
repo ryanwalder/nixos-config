@@ -39,11 +39,13 @@
       program_gnome-terminal
       program_gnupg
       program_i3
+      program_inkscape
       program_just
       program_konsole
       program_krita
       program_mpv
       program_nemo
+      program_networkmanager
       program_nvim
       program_nvim-completion
       program_nvim-conform

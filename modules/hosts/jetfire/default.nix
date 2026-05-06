@@ -15,6 +15,9 @@
       hardware_swap
       hardware_cpu-intel
       hardware_bluetooth
+      hardware_laptop
+
+      program_networkmanager
     ];
 
     system.stateVersion = "25.11";
