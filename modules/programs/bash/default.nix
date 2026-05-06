@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.modules.homeManager.bash = { config, ... }: {
+{...}: {
+  flake.modules.homeManager.program_bash = {config, ...}: {
     programs.bash = {
       enable = true;
       enableCompletion = true;
@@ -7,19 +7,19 @@
       historyFile = "${config.xdg.stateHome}/bash/history";
       historySize = 50000;
       historyFileSize = 500000;
-      historyControl = [ "ignoreboth" ];
+      historyControl = ["ignoreboth"];
 
-      shellOptions = [ "histappend" "checkwinsize" ];
+      shellOptions = ["histappend" "checkwinsize"];
 
       shellAliases = {
-        ls     = "ls --group-directories-first --color=auto";
-        grep   = "grep --color=auto --exclude-dir={.git,.venv,node_modules,.terraform}";
-        ll     = "ls -l";
-        la     = "ls -al";
-        mtr    = "mtr --curses";
-        tree   = "tree --dirsfirst -I \"\\.terraform|\\.git/|\\.venv|node_modules\"";
-        ".."   = "cd ../";
-        "..."  = "cd ../../";
+        ls = "ls --group-directories-first --color=auto";
+        grep = "grep --color=auto --exclude-dir={.git,.venv,node_modules,.terraform}";
+        ll = "ls -l";
+        la = "ls -al";
+        mtr = "mtr --curses";
+        tree = "tree --dirsfirst -I \"\\.terraform|\\.git/|\\.venv|node_modules\"";
+        ".." = "cd ../";
+        "..." = "cd ../../";
         "...." = "cd ../../../";
         "....." = "cd ../../../../";
       };

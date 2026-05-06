@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.nvim = { ... }: {
+  flake.modules.homeManager.program_nvim-completion = { ... }: {
     programs.nixvim.plugins = {
       blink-indent.enable = true;
       blink-pairs.enable = true;

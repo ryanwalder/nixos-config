@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.nvim = { pkgs, ... }: {
+  flake.modules.homeManager.program_nvim-conform = { pkgs, ... }: {
     programs.nixvim = {
       plugins.conform-nvim = {
         enable = true;

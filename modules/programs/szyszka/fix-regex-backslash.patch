@@ -1,0 +1,11 @@
+--- a/src/help_function.rs
++++ b/src/help_function.rs
+@@ -83,7 +83,7 @@ pub const CHARACTER: char = '\\';
+
+ pub fn validate_name(before_name: &str) -> String {
+     // TODO when trying to print text in middle of text, then caret change position, fix it
+-    before_name.chars().filter(|e| *e != '\\' && *e != '/').collect::<String>()
++    before_name.chars().filter(|e| *e != '/').collect::<String>()
+ }
+
+ pub fn validate_number(before_name: &str) -> String {

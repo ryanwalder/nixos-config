@@ -1,6 +1,15 @@
-{ ... }: {
-  flake.modules.homeManager.i3 = { lib, pkgs, ... }:
-  let
+{...}: {
+  flake.modules.nixos.program_i3 = {...}: {
+    services.xserver.enable = true;
+    services.xserver.windowManager.i3.enable = true;
+    services.xserver.xkb.layout = "gb";
+
+    environment.sessionVariables = {
+      XDG_CURRENT_DESKTOP = "i3";
+    };
+  };
+
+  flake.modules.homeManager.program_i3 = {pkgs, ...}: let
     mod = "Mod4";
   in {
     xsession.windowManager.i3 = {
@@ -11,7 +20,7 @@
         floating.modifier = mod;
 
         fonts = {
-          names = [ "Hack Nerd Font Mono" ];
+          names = ["Hack Nerd Font Mono"];
           style = "Regular";
           size = 8.0;
         };
@@ -50,23 +59,90 @@
         window = {
           border = 2;
           commands = [
-            { criteria = { window_role = "pop-up"; }; command = "floating enable"; }
-            { criteria = { window_role = "task_dialog"; }; command = "floating enable"; }
-            { criteria = { class = ".*"; }; command = "border pixel 2"; }
-            { criteria = { class = "scratch"; }; command = "move to scratchpad"; }
-            { criteria = { class = "Pavucontrol"; }; command = "floating enable"; }
-            { criteria = { class = "Wicd-client.py"; }; command = "floating enable"; }
-            { criteria = { class = "Lxappearance"; }; command = "floating enable"; }
-            { criteria = { title = "Microsoft Teams Notification"; }; command = "floating enable"; }
-            { criteria = { class = "Piper"; }; command = "floating enable"; }
-            { criteria = { class = "MediaElch"; title = "Settings"; }; command = "floating enable, border normal"; }
-            { criteria = { class = "MediaElch"; title = "Search Result"; }; command = "floating enable, border normal"; }
-            { criteria = { class = "MediaElch"; title = "Choose an Image"; }; command = "floating enable, border normal"; }
-            { criteria = { instance = "origin.exe"; }; command = "floating enable"; }
-            { criteria = { instance = "^Dungeondraft$"; }; command = "floating disable, border normal"; }
-            { criteria = { title = "^Origin$"; }; command = "floating enable, fullscreen disable"; }
-            { criteria = { instance = "^Steam$"; title = "^Steam - Self Updater$"; }; command = "floating enable, resize set 500 750"; }
-            { criteria = { class = "Nemo"; instance = "nemo"; title = "File conflict"; }; command = "floating enable, move position center"; }
+            {
+              criteria = {window_role = "pop-up";};
+              command = "floating enable";
+            }
+            {
+              criteria = {window_role = "task_dialog";};
+              command = "floating enable";
+            }
+            {
+              criteria = {class = ".*";};
+              command = "border pixel 2";
+            }
+            {
+              criteria = {class = "scratch";};
+              command = "move to scratchpad";
+            }
+            {
+              criteria = {class = "pavucontrol";};
+              command = "floating enable";
+            }
+            {
+              criteria = {class = "Wicd-client.py";};
+              command = "floating enable";
+            }
+            {
+              criteria = {class = "Lxappearance";};
+              command = "floating enable";
+            }
+            {
+              criteria = {title = "Microsoft Teams Notification";};
+              command = "floating enable";
+            }
+            {
+              criteria = {class = "Piper";};
+              command = "floating enable";
+            }
+            {
+              criteria = {
+                class = "MediaElch";
+                title = "Settings";
+              };
+              command = "floating enable, border normal";
+            }
+            {
+              criteria = {
+                class = "MediaElch";
+                title = "Search Result";
+              };
+              command = "floating enable, border normal";
+            }
+            {
+              criteria = {
+                class = "MediaElch";
+                title = "Choose an Image";
+              };
+              command = "floating enable, border normal";
+            }
+            {
+              criteria = {instance = "origin.exe";};
+              command = "floating enable";
+            }
+            {
+              criteria = {instance = "^Dungeondraft$";};
+              command = "floating disable, border normal";
+            }
+            {
+              criteria = {title = "^Origin$";};
+              command = "floating enable, fullscreen disable";
+            }
+            {
+              criteria = {
+                instance = "^Steam$";
+                title = "^Steam - Self Updater$";
+              };
+              command = "floating enable, resize set 500 750";
+            }
+            {
+              criteria = {
+                class = "Nemo";
+                instance = "nemo";
+                title = "File conflict";
+              };
+              command = "floating enable, move position center";
+            }
           ];
         };
 
@@ -75,17 +151,17 @@
         focus.newWindow = "urgent";
         workspaceAutoBackAndForth = true;
 
-        keybindings = lib.mkOptionDefault {
+        keybindings = {
           "${mod}+Shift+q" = "kill";
 
-          "${mod}+Left"  = "focus left";
-          "${mod}+Down"  = "focus down";
-          "${mod}+Up"    = "focus up";
+          "${mod}+Left" = "focus left";
+          "${mod}+Down" = "focus down";
+          "${mod}+Up" = "focus up";
           "${mod}+Right" = "focus right";
 
-          "${mod}+Shift+Left"  = "move left";
-          "${mod}+Shift+Down"  = "move down";
-          "${mod}+Shift+Up"    = "move up";
+          "${mod}+Shift+Left" = "move left";
+          "${mod}+Shift+Down" = "move down";
+          "${mod}+Shift+Up" = "move up";
           "${mod}+Shift+Right" = "move right";
 
           "${mod}+h" = "split h";
@@ -128,35 +204,35 @@
 
           "${mod}+Shift+e" = ''exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"'';
 
-          "${mod}+Return"   = "exec ${pkgs.wezterm}/bin/wezterm";
-          "${mod}+Shift+f"  = "exec ${pkgs.nemo}/bin/nemo";
-
-          "Print"        = "exec ${pkgs.flameshot}/bin/flameshot full -c";
-          "${mod}+Print" = "exec ${pkgs.flameshot}/bin/flameshot gui";
+          "${mod}+Return" = "exec ${pkgs.kdePackages.konsole}/bin/konsole";
+          "${mod}+Shift+f" = "exec ${pkgs.nemo}/bin/nemo";
+          "${mod}+Shift+x" = "exec ${pkgs.xkill}/bin/xkill";
 
           "${mod}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun -show-icons -drun-match-fields name -matching regex -drun-display-format {name}";
 
-          "${mod}+F7"           = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+          "${mod}+F7" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
           "XF86AudioLowerVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-          "${mod}+F8"           = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+          "${mod}+F8" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
           "XF86AudioRaiseVolume" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-          "${mod}+F9"           = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          "XF86AudioMute"        = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          "${mod}+F12"          = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
-          "XF86AudioPlay"        = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
-          "XF86AudioPause"       = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
-          "${mod}+F11"          = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl next";
-          "XF86AudioNext"        = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl next";
-          "${mod}+F10"          = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl previous";
-          "XF86AudioPrev"        = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl previous";
+          "${mod}+F9" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          "XF86AudioMute" = "exec --no-startup-id ${pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+          "${mod}+F12" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
+          "XF86AudioPlay" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
+          "XF86AudioPause" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl play-pause";
+          "${mod}+F11" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl next";
+          "${mod}+Shift+F11" = "exec --no-startup-id ${pkgs.cmus}/bin/cmus-remote -C player-next-album";
+          "XF86AudioNext" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl next";
+          "${mod}+F10" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl previous";
+          "${mod}+Shift+F10" = "exec --no-startup-id ${pkgs.cmus}/bin/cmus-remote -C player-prev-album";
+          "XF86AudioPrev" = "exec --no-startup-id ${pkgs.playerctl}/bin/playerctl previous";
         };
 
         modes = {
           resize = {
-            "Left"   = "resize shrink width 1 px or 1 ppt";
-            "Down"   = "resize grow height 1 px or 1 ppt";
-            "Up"     = "resize shrink height 1 px or 1 ppt";
-            "Right"  = "resize grow width 1 px or 1 ppt";
+            "Left" = "resize shrink width 1 px or 1 ppt";
+            "Down" = "resize grow height 1 px or 1 ppt";
+            "Up" = "resize shrink height 1 px or 1 ppt";
+            "Right" = "resize grow width 1 px or 1 ppt";
             "Return" = "mode default";
             "Escape" = "mode default";
           };
@@ -164,36 +240,48 @@
 
         assigns = {
           "3" = [
-            { class = "^steam$"; title = "Steam$"; }
-            { class = "^steam$"; title = "Friends List.*"; }
-            { class = "^steam$"; title = "Chat$"; }
-            { class = "^steam$"; title = "^Steam - Self Updater$"; }
+            {
+              class = "^steam$";
+              title = "Steam$";
+            }
+            {
+              class = "^steam$";
+              title = "Friends List.*";
+            }
+            {
+              class = "^steam$";
+              title = "Chat$";
+            }
+            {
+              class = "^steam$";
+              title = "^Steam - Self Updater$";
+            }
           ];
           "6" = [
-            { instance = "^Slack$"; }
-            { instance = "^discord$"; }
-            { instance = "^vesktop$"; }
+            {instance = "^Slack$";}
+            {instance = "^discord$";}
+            {instance = "^vesktop$";}
+          ];
+          "10" = [
+            {instance = "^cmus$";}
           ];
         };
 
         startup = [
-          { command = "${pkgs.xsetroot}/bin/xsetroot -solid '#36393f'"; notification = false; }
-          { command = "killall dunst; sleep 1; ${pkgs.dunst}/bin/dunst"; always = true; notification = false; }
-          { command = "${pkgs.xset}/bin/xset s 290 550"; notification = false; }
-          { command = "${pkgs.xset}/bin/xset dpms 285 600 900"; notification = false; }
-          { command = "${pkgs.picom}/bin/picom"; notification = false; }
+          {
+            command = "${pkgs.xsetroot}/bin/xsetroot -solid '#36393f'";
+            notification = false;
+          }
+          {
+            command = "${pkgs.xset}/bin/xset s 290 550";
+            notification = false;
+          }
+          {
+            command = "${pkgs.xset}/bin/xset dpms 285 600 900";
+            notification = false;
+          }
         ];
       };
     };
-
-    home.packages = with pkgs; [
-      flameshot
-      rofi
-      nemo
-      dunst
-      picom
-      playerctl
-      pulseaudio
-    ];
   };
 }

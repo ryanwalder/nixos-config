@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.modules.homeManager.direnv = { ... }: {
+{...}: {
+  flake.modules.homeManager.program_direnv = {...}: {
     programs.direnv = {
       enable = true;
       enableBashIntegration = true;

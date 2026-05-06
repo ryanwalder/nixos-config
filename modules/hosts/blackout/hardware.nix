@@ -1,7 +1,7 @@
 { ... }: {
   flake.modules.nixos.blackout = {
     hardware.facter.reportPath = ./facter.json;
-    host.swap = "regular";
+    hardware.swap.mode = "regular";
     hardware.nvidia.gpu = "rtx3080";
 
     boot.initrd.availableKernelModules = [

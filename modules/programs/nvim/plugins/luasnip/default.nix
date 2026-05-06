@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.nvim = { ... }: {
+  flake.modules.homeManager.program_nvim-luasnip = { ... }: {
     programs.nixvim = {
       plugins.luasnip.enable = true;
 

@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.nvim = { pkgs, ... }:
+  flake.modules.homeManager.program_nvim-lsp = { pkgs, ... }:
   let
     css-variables-language-server = pkgs.stdenv.mkDerivation rec {
       pname = "css-variables-language-server";
@@ -56,7 +56,10 @@
         gopls.enable = true;
         groovyls = { enable = true; package = pkgs.groovy-language-server; };
         helm_ls.enable = true;
-        htmx.enable = true;
+        htmx = {
+          enable = true;
+          filetypes = [ "html" "htmldjango" "templ" ];
+        };
         jsonls.enable = true;
         jsonnet_ls.enable = true;
         just.enable = true;

@@ -1,0 +1,10 @@
+hosts:
+  blackout: age1g3yegu7hx0z0l9pl6d2m5p2e3ync2eztmx3h5w43kt9p00tj83esxx2rmf
+scopes:
+  common:
+    - blackout
+  role:
+    home:
+      - blackout
+    workstation:
+      - blackout

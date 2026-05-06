@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.yt-dlp = { ... }: {
+  flake.modules.homeManager.program_yt-dlp = { config, ... }: {
     programs.yt-dlp = {
       enable = true;
 
@@ -12,5 +12,11 @@
     programs.bash.shellAliases = {
       youtube-dl = ''yt-dlp "$@"'';
     };
+
+    home.file.".local/share/bash/cb-dl.sh".source = ./scripts/cb-dl;
+
+    programs.bash.initExtra = ''
+      source "${config.home.homeDirectory}/.local/share/bash/cb-dl.sh"
+    '';
   };
 }

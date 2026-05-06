@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.polybar = { lib, pkgs, config, ... }:
+  flake.modules.homeManager.program_polybar = { lib, pkgs, config, ... }:
   let
     cfg = config.modules.home.polybar;
     icon = glyph: "%{T2}${builtins.fromJSON glyph}%{T-}";
@@ -21,7 +21,7 @@
       if [ -n "$pid" ]; then
         kill -9 $pid
       else
-        ${pkgs.wezterm}/bin/wezterm start --always-new-process --class polybar-btop -- ${pkgs.btop}/bin/btop &
+        ${pkgs.gnome-terminal}/bin/gnome-terminal --class=polybar-btop -- ${pkgs.btop}/bin/btop &
       fi
     '';
     launchPolybar = pkgs.writeShellScriptBin "polybar-launch" ''

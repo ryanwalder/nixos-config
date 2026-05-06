@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.gnupg = { pkgs, ... }: {
+  flake.modules.homeManager.program_gnupg = { pkgs, ... }: {
     programs.gpg.enable = true;
     services.gpg-agent = {
       enable = true;

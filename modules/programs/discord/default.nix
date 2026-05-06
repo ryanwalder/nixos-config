@@ -1,5 +1,5 @@
-{ ... }: {
-  flake.modules.homeManager.discord = { ... }: {
+{...}: {
+  flake.modules.homeManager.program_discord = {...}: {
     programs.nixcord = {
       enable = true;
       discord.equicord.enable = true;

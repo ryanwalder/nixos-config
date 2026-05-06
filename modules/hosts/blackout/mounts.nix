@@ -1,6 +1,6 @@
-{ inputs, ... }: {
+{inputs, ...}: {
   flake.modules.nixos.blackout = {
-    boot.supportedFilesystems = [ "nfs" ];
+    boot.supportedFilesystems = ["nfs"];
 
     imports = [
       (inputs.self.factory.systemd-mount {
@@ -17,6 +17,16 @@
       (inputs.self.factory.systemd-mount {
         what = "nas.tfu.ac:/media/backups";
         where = "/media/backups";
+        type = "nfs";
+      })
+      (inputs.self.factory.systemd-mount {
+        what = "nas.tfu.ac:/media/ftp";
+        where = "/media/ftp";
+        type = "nfs";
+      })
+      (inputs.self.factory.systemd-mount {
+        what = "nas.tfu.ac:/media/ai";
+        where = "/media/ai";
         type = "nfs";
       })
     ];

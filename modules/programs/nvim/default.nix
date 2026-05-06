@@ -1,6 +1,6 @@
-{ ... }: {
-  flake.modules.homeManager.nvim = { ... }: {
-    programs.nixvim = { lib, ... }: {
+{...}: {
+  flake.modules.homeManager.program_nvim = {...}: {
+    programs.nixvim = {lib, ...}: {
       enable = true;
       defaultEditor = true;
       viAlias = true;
@@ -35,6 +35,14 @@
         backupdir = lib.nixvim.mkRaw ''vim.fn.stdpath "data" .. "/backup"'';
         undofile = true;
       };
+
+      keymaps = [
+        {
+          mode = "n";
+          key = "<Esc>";
+          action = "<cmd>nohlsearch<CR>";
+        }
+      ];
 
       globals.mapleader = " ";
     };

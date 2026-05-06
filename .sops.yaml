@@ -1,0 +1,17 @@
+creation_rules:
+- path_regex: ^secrets/common\.yaml$
+  key_groups:
+  - age:
+    - age1g3yegu7hx0z0l9pl6d2m5p2e3ync2eztmx3h5w43kt9p00tj83esxx2rmf
+- path_regex: ^secrets/host/blackout\.yaml$
+  key_groups:
+  - age:
+    - age1g3yegu7hx0z0l9pl6d2m5p2e3ync2eztmx3h5w43kt9p00tj83esxx2rmf
+- path_regex: ^secrets/role/home\.yaml$
+  key_groups:
+  - age:
+    - age1g3yegu7hx0z0l9pl6d2m5p2e3ync2eztmx3h5w43kt9p00tj83esxx2rmf
+- path_regex: ^secrets/role/workstation\.yaml$
+  key_groups:
+  - age:
+    - age1g3yegu7hx0z0l9pl6d2m5p2e3ync2eztmx3h5w43kt9p00tj83esxx2rmf

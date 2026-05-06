@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.nvim = { ... }: {
+  flake.modules.homeManager.program_nvim-misc = { ... }: {
     programs.nixvim.plugins = {
       blame.enable = true;
       lualine.enable = true;

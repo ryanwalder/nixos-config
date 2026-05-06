@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+cb-dl() {
+  local dir
+  local out_dir
+  local url
+  local name
+  local failures
+  local max_failures
+  local delay
+
+  dir=/media/ryan/videos/chaturbate/
+  url="${1}"
+  name=$(echo "${url}" | cut -d "/" -f 4)
+  out_dir="${dir}/${name}"
+  failures=0
+  max_failures=8
+
+  if [[ ! -d "${out_dir}" ]]; then
+    mkdir -p "${out_dir}"
+  fi
+
+  while true; do
+    if ! ps ax | grep "${name}" | grep -v grep &>/dev/null; then
+      if yt-dlp \
+        --output "${out_dir}/$(date +"%Y-%m-%d_%H%M").%(ext)s" "$@"; then
+        # Success - reset failure count
+        failures=0
+      else
+        ((failures++))
+        if ((failures >= max_failures)); then
+          echo "Max retries ($max_failures) reached, exiting."
+          exit 1
+        fi
+
+        if ((failures == 1)); then
+          delay=0
+        else
+          delay=$((10 * 2 ** (failures - 2)))
+        fi
+
+        if ((delay > 0)); then
+          echo "Retry $failures/$max_failures in ${delay}s..."
+          sleep "$delay"
+        else
+          echo "Retry $failures/$max_failures immediately..."
+        fi
+      fi
+    else
+      echo "Already downloading ${name}"
+      exit 0
+    fi
+  done
+}

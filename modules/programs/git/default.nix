@@ -1,5 +1,5 @@
 { ... }: {
-  flake.modules.homeManager.git = { pkgs, ... }:
+  flake.modules.homeManager.program_git = { pkgs, ... }:
   let
     gitScripts = [
       (pkgs.writeShellScriptBin "git-brd" (builtins.readFile ./scripts/git-brd))

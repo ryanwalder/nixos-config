@@ -14,6 +14,10 @@ build:
 test:
     sudo nixos-rebuild test --flake .#{{ hostname }}
 
+# Apply configuration on next boot
+boot:
+    sudo nixos-rebuild boot --flake .#{{ hostname }}
+
 # Update flake inputs
 update:
     nix flake update
@@ -22,9 +26,13 @@ update:
 upgrade: update switch
 
 # Generate facter config for host
-facter:
-    mkdir -p modules/hosts/{{ hostname }}
+facter host=hostname:
+    mkdir -p modules/hosts/{{ host }}
     sudo nix run \
       nixpkgs#nixos-facter -- \
-      -o modules/hosts/{{ hostname }}/facter.json
-    sudo chown {{ uid }}:{{ gid }} modules/hosts/{{ hostname }}/facter.json
+      -o modules/hosts/{{ host }}/facter.json
+    sudo chown {{ uid }}:{{ gid }} modules/hosts/{{ host }}/facter.json
+
+# Manage sops secrets (add, remove, edit, update)
+sops *args:
+    ./scripts/sops.py "{{ justfile_directory() }}" {{ args }}
